@@ -13,7 +13,7 @@ import { TaskForm } from './TaskForm';
 export const App = () => {
 
   // récupération des données dans Mongo
-  const tasks = useTracker( () => TasksCollection.find( {} ).fetch() );
+  const tasks = useTracker( () => TasksCollection.find( {}, { sort: { createdAt: -1 }} ).fetch() );
 
   return (
     <div>
