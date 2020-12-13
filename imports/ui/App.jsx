@@ -32,7 +32,7 @@ export const App = () => {
       <header>
         <div className="app-bar">
           <div className="app-header">
-            <h1>Todo list</h1>
+            <h1>📝️ To Do List</h1>
           </div>
         </div>
       </header>
