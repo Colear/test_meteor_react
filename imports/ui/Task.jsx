@@ -2,7 +2,7 @@
 
 import React from 'react';
  
-export const Task = ({ task, onCheckboxClick }) => {
+export const Task = ({ task, onCheckboxClick, onDeleteClick }) => {
 
   return (
     <li>
