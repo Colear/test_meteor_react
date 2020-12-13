@@ -37,7 +37,7 @@ export const App = () => {
         </div>
       </header>
 
-      <div className="tasks">
+      <div className="main">
         <TaskForm/>
 
         <ul className="tasks">
