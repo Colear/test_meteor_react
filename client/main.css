@@ -1,3 +1,5 @@
+/* La modification du CSS rafraichit le client sans relancer Meteor */
+
 body {
   padding: 10px;
   font-family: sans-serif;
