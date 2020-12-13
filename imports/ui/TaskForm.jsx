@@ -24,9 +24,10 @@ export const TaskForm = () => {
     setText("");
   };
 
-  // à chaque changement de l'input on met à jour le state
+  // évènements : à chaque changement de l'input on met à jour le state, et en appuyant
+  // sur le bouton on appelle handleSubmit
   return (
-    <form className="task-form">
+    <form className="task-form" onSubmit={handleSubmit}>
       <input
         type="text"
         placeholder="Description de la tâche"
