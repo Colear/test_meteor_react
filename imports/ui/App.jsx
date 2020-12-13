@@ -14,6 +14,9 @@ const toggleChecked = ({ _id, isChecked }) => {
   })
 };
 
+// Suppression d'un tâche
+const deleteTask = ({ _id }) => TasksCollection.remove(_id);
+
 /*
   L'arrow function correspond à function (task) { return '<Task key={ task._id } task={ task }/>' }.
   Avec map elle est appelée pour chaque ligne du tableau tasks.
@@ -31,9 +34,14 @@ export const App = () => {
       <TaskForm/>
 
       <ul>
-        { tasks.map( task => <Task key={ task._id } task={ task } onCheckboxClick={toggleChecked} />) }
+        { tasks.map( task => <Task
+          key={ task._id }
+          task={ task }
+          onCheckboxClick={toggleChecked}
+          onDeleteClick={deleteTask}
+        />) }
       </ul>
-      
+
     </div>
   );
 }
