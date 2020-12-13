@@ -5,6 +5,15 @@ import { Task } from './Task';
 import { TaskForm } from './TaskForm';
 
 
+// Update de la tâche quand elle est cochée / décochée
+const toggleChecked = ({ _id, isChecked }) => {
+  TasksCollection.update( _id, {
+    $set: {
+      isChecked: !isChecked
+    }
+  })
+};
+
 /*
   L'arrow function correspond à function (task) { return '<Task key={ task._id } task={ task }/>' }.
   Avec map elle est appelée pour chaque ligne du tableau tasks.
@@ -22,8 +31,9 @@ export const App = () => {
       <TaskForm/>
 
       <ul>
-        { tasks.map( task => <Task key={ task._id } task={ task }/>) }
+        { tasks.map( task => <Task key={ task._id } task={ task } onCheckboxClick={toggleChecked} />) }
       </ul>
+      
     </div>
   );
 }
