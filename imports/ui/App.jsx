@@ -40,7 +40,7 @@ export const App = () => {
       <div className="tasks">
         <TaskForm/>
 
-        <ul>
+        <ul className="tasks">
           { tasks.map( task => <Task
             key={ task._id }
             task={ task }
