@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useTracker } from 'meteor/react-meteor-data';
 import { TasksCollection } from '/imports/api/TasksCollection';
 import { Task } from './Task';
@@ -24,8 +24,14 @@ const deleteTask = ({ _id }) => TasksCollection.remove(_id);
 */
 export const App = () => {
 
+  // état du filtre pour cacher les tâche complétées
+  const [hideCompleted, setHideCompleted] = useState(false);
+
   // récupération des données dans Mongo
-  const tasks = useTracker( () => TasksCollection.find( {}, { sort: { createdAt: -1 }} ).fetch() );
+  // on prend en compte le filtre pour cacher les tâches terminées
+  const hideCompletedFilter = { isChecked: { $ne: true } };
+
+  const tasks = useTracker( () => TasksCollection.find( hideCompleted ? hideCompletedFilter : {}, { sort: { createdAt: -1 }} ).fetch() );
 
   return (
     <div className="app">
@@ -39,6 +45,11 @@ export const App = () => {
 
       <div className="main">
         <TaskForm/>
+        <div className="filter">
+          <button onClick={() => setHideCompleted(!hideCompleted)}>
+            {hideCompleted ? 'Show All' : 'Hide Completed'}
+          </button>
+       </div>
 
         <ul className="tasks">
           { tasks.map( task => <Task
