@@ -1,8 +1,9 @@
-import React, { useState } from 'react';
+import React, { useState, Fragment } from 'react';
 import { useTracker } from 'meteor/react-meteor-data';
 import { TasksCollection } from '/imports/api/TasksCollection';
 import { Task } from './Task';
 import { TaskForm } from './TaskForm';
+import { LoginForm } from './LoginForm';
 
 
 // Update de la tâche quand elle est cochée / décochée
@@ -23,6 +24,9 @@ const deleteTask = ({ _id }) => TasksCollection.remove(_id);
   Comme il y a un seul paramètre on peut ne pas mettre de parenthèse : task => {...} au lieu de (task) => {...}
 */
 export const App = () => {
+
+  // Récupération du user 
+  const user = useTracker(() => Meteor.user());
 
   // état du filtre pour cacher les tâche complétées
   const [hideCompleted, setHideCompleted] = useState(false);
@@ -52,22 +56,27 @@ export const App = () => {
       </header>
 
       <div className="main">
-        <TaskForm/>
-        <div className="filter">
-          <button onClick={() => setHideCompleted(!hideCompleted)}>
-            {hideCompleted ? 'Show All' : 'Hide Completed'}
-          </button>
-       </div>
+        {user ? (
+          <Fragment>
+            <TaskForm/>
+            <div className="filter">
+              <button onClick={() => setHideCompleted(!hideCompleted)}>
+                {hideCompleted ? 'Show All' : 'Hide Completed'}
+              </button>
+            </div>
 
-        <ul className="tasks">
-          { tasks.map( task => <Task
-            key={ task._id }
-            task={ task }
-            onCheckboxClick={toggleChecked}
-            onDeleteClick={deleteTask}
-          />) }
-        </ul>
-
+            <ul className="tasks">
+              { tasks.map( task => <Task
+                key={ task._id }
+                task={ task }
+                onCheckboxClick={toggleChecked}
+                onDeleteClick={deleteTask}
+              />) }
+            </ul>
+          </Fragment>
+        ) : (
+          <LoginForm />
+        )}
       </div>
 
     </div>
