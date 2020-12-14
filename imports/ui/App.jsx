@@ -31,6 +31,14 @@ export const App = () => {
   // on prend en compte le filtre pour cacher les tâches terminées
   const hideCompletedFilter = { isChecked: { $ne: true } };
 
+  // nombre de tâche actives
+  const pendingTasksCount = useTracker(() =>
+    TasksCollection.find(hideCompletedFilter).count()
+  );
+  const pendingTasksTitle = `${
+    pendingTasksCount ? ` (${pendingTasksCount})` : ''
+  }`;
+
   const tasks = useTracker( () => TasksCollection.find( hideCompleted ? hideCompletedFilter : {}, { sort: { createdAt: -1 }} ).fetch() );
 
   return (
@@ -38,7 +46,7 @@ export const App = () => {
       <header>
         <div className="app-bar">
           <div className="app-header">
-            <h1>📝️ To Do List</h1>
+            <h1>📝️ To Do List {pendingTasksTitle}</h1>
           </div>
         </div>
       </header>
